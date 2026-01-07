@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusCerts | Digital Certificate System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* === COLORS === */
+:root {
+  --primary-color: #8b5cf6; /* Purple accent */
+  --primary-dark: #6d28d9;
+  --secondary-color: #ede9fe;
+  --text-main: #1f2937;
+  --text-muted: #4b5563;
+  --card-bg: #ffffff;
+  --bg-gradient: linear-gradient(135deg,#ede9fe,#f3f4f6);
+}
+
+/* === BASE === */
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Inter', sans-serif; background:#f5f7fa; color: var(--text-main); overflow-x:hidden; }
+
+/* NAVBAR */
+nav {
+  background: var(--card-bg); padding:16px 60px;
+  display:flex; justify-content: space-between; align-items:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.08);
+  position:sticky; top:0; z-index:100;
+}
+nav h1 { color: var(--primary-color); font-weight:700; font-size:28px; letter-spacing:1px; }
+
+/* HERO */
+.hero { padding:100px 60px; display:grid; grid-template-columns:1.3fr 1fr; gap:50px; align-items:center; background: var(--bg-gradient);}
+.hero h2 { font-size:48px; line-height:1.2; margin-bottom:20px; color: var(--primary-dark); animation: slideFadeIn 1s ease forwards; opacity:0;}
+.hero p { font-size:18px; color:#374151; margin-bottom:30px; animation: slideFadeIn 1.2s ease forwards; opacity:0;}
+.hero .cta { display:flex; gap:15px; animation: slideFadeIn 1.4s ease forwards; opacity:0;}
+.hero .cta button { padding:16px 28px; border-radius:14px; font-size:16px; border:none; cursor:pointer; transition:0.4s; font-weight:500;}
+.primary { background: var(--primary-color); color:white; }
+.primary:hover { background: var(--primary-dark); transform:scale(1.05);}
+.secondary { background: var(--secondary-color); color: var(--primary-color);}
+.secondary:hover { transform:scale(1.05);}
+.hero img { width:100%; animation: float 5s ease-in-out infinite; }
+
+/* TRUST BAR */
+.trust { background: var(--card-bg); padding:30px; display:flex; justify-content:space-around; font-weight:500; color:#4b5563; box-shadow:0 4px 20px rgba(0,0,0,0.05); border-radius:12px; margin:20px 60px; }
+
+/* METRICS */
+.metrics { padding:80px 60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px;}
+.metric { background: var(--card-bg); padding:40px; border-radius:20px; box-shadow:0 15px 35px rgba(0,0,0,0.1); text-align:center; transition:0.5s; cursor:pointer; position:relative; overflow:hidden; }
+.metric::before { content:""; position:absolute; width:100%; height:100%; background: linear-gradient(120deg, rgba(139,92,246,0.15), rgba(139,92,246,0)); top:0; left:-100%; transition:0.7s;}
+.metric:hover::before { left:0; }
+.metric:hover { transform: translateY(-12px) scale(1.08); box-shadow:0 25px 50px rgba(0,0,0,0.2); background: var(--primary-color); color:white; }
+.metric h3 { font-size:40px; margin-bottom:8px; transition:1s; }
+.metric p { font-size:16px; color: var(--text-muted); transition:0.5s; }
+
+/* PROCESS */
+.process { padding:100px 60px; background:#f0f9ff; border-radius:20px; }
+.process h2 { text-align:center; font-size:36px; margin-bottom:50px; color: var(--primary-dark); }
+.steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:35px; }
+.step { background: var(--card-bg); padding:35px; border-radius:20px; box-shadow:0 15px 35px rgba(0,0,0,0.1); text-align:center; transition:0.4s; position:relative; overflow:hidden;}
+.step:hover { transform: translateY(-10px) scale(1.03); box-shadow:0 20px 50px rgba(0,0,0,0.15);}
+.step h4 { margin-bottom:12px; color: var(--primary-color); font-size:20px; }
+.step p { color: var(--text-muted); font-size:15px; }
+
+/* FORM AREA */
+.form-area { padding:100px 60px; display:grid; grid-template-columns:2fr 1fr; gap:50px; }
+.form-box { background: var(--card-bg); padding:50px; border-radius:22px; box-shadow:0 20px 45px rgba(0,0,0,0.12);}
+.form-box h2 { margin-bottom:30px; color: var(--primary-dark);}
+form input, form select, form textarea { width:100%; padding:16px; margin-bottom:20px; border-radius:14px; border:1px solid #d1d5db; font-size:16px; transition:0.3s;}
+form input:focus, form select:focus, form textarea:focus { border-color: var(--primary-color); outline:none; transform:scale(1.02);}
+form button { width:100%; padding:18px; background: var(--primary-color); border:none; border-radius:14px; color:white; font-size:17px; cursor:pointer; font-weight:500; transition:0.4s;}
+form button:hover { background: var(--primary-dark); transform:scale(1.05); }
+
+/* SIDE INFO */
+.side-info { display:flex; flex-direction:column; gap:25px; }
+.info-card { background: var(--card-bg); padding:30px; border-radius:18px; box-shadow:0 15px 35px rgba(0,0,0,0.1); text-align:center; transition:0.4s; }
+.info-card:hover { transform: translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,0.15);}
+.info-card h4 { margin-bottom:10px; color: var(--primary-color); }
+
+/* FOOTER */
+footer { background:#111827; color:#9ca3af; padding:50px 60px; margin-top:60px; text-align:center; border-radius:12px; }
+
+/* TOAST */
+.toast { position: fixed; top: 20px; right: 20px; background: var(--primary-color); color:white; padding:18px 28px; border-radius:14px; box-shadow:0 6px 25px rgba(0,0,0,0.3); opacity:0; transform: translateY(-20px); transition:0.5s; z-index:999;}
+.toast.show { opacity:1; transform:translateY(0); }
+
+/* ANIMATIONS */
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+@keyframes slideFadeIn { 0% {opacity:0; transform:translateY(20px);} 100% {opacity:1; transform:translateY(0);} }
+
+@media(max-width:900px){ .hero, .form-area { grid-template-columns:1fr; } .hero img{margin-top:30px;} }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <h1>CampusCerts</h1>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <h2>Digitize Certificate Requests.<br>Approve Faster. Deliver Instantly.</h2>
+    <p>A centralized, secure platform for students and institutions to manage certificate requests without paperwork.</p>
+    <div class="cta">
+      <button class="primary">Submit Request</button>
+      <button class="secondary">How it Works</button>
+    </div>
+  </div>
+  <img src="https://illustrations.popsy.co/blue/digital-nomad.svg" width="100%">
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <span>✔ Used by Universities</span>
+  <span>✔ Secure & Verified</span>
+  <span>✔ AI Assisted Review</span>
+  <span>✔ 24–48 hr SLA</span>
+</section>
+
+<!-- METRICS -->
+<section class="metrics">
+  <div class="metric"><h3 id="totalRequests">1250</h3><p>Total Requests</p></div>
+  <div class="metric"><h3 id="approvedRequests">1000</h3><p>Approved</p></div>
+  <div class="metric"><h3 id="pendingRequests">250</h3><p>Pending</p></div>
+  <div class="metric"><h3 id="avgTurnaround">1.5</h3><p>Avg Turnaround (Days)</p></div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <h2>How It Works</h2>
+  <div class="steps">
+    <div class="step"><h4>1. Submit Request</h4><p>Fill the digital form with required details.</p></div>
+    <div class="step"><h4>2. Auto Validation</h4><p>AI + admin checks your request.</p></div>
+    <div class="step"><h4>3. Approval</h4><p>Institution verifies and approves.</p></div>
+    <div class="step"><h4>4. Delivery</h4><p>Certificate sent via email.</p></div>
+  </div>
+</section>
+
+<!-- FORM AREA -->
+<section class="form-area">
+  <div class="form-box">
+    <h2>Certificate Request Form</h2>
+    <form id="certForm" target="hidden_iframe">
+      <!-- REPLACE DUMMY ENTRY IDs -->
+      <input name="Name" placeholder="Full Name" required>
+<input name="Email" placeholder="Email" required>
+<input name="Roll Number" placeholder="Roll Number" required>
+<select name="Department" required>
+  <option value="">Select Department</option>
+  <option>CSE</option>
+  <option>IT</option>
+  <option>ECE</option>
+</select>
+<select name="Certificate Type" required>
+  <option value="">Select Certificate Type</option>
+  <option value="bonafide">Bonafide</option>
+  <option value="leave">Leave</option>
+  <option value="complaint">Complaint</option>
+</select>
+
+      <button type="submit">Submit Request</button>
+    </form>
+  </div>
+
+  <div class="side-info">
+    <div class="info-card">
+      <h4>Processing Time</h4>
+      <p>Normal: 48 hrs<br>Urgent: 24 hrs</p>
+    </div>
+    <div class="info-card">
+      <h4>Support</h4>
+      <p>support@campuscerts.in</p>
+    </div>
+    <div class="info-card">
+      <h4>Status Tracking</h4>
+      <p>Real-time updates via email</p>
+    </div>
+  </div>
+</section>
+
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+<div class="toast" id="toast">✅ Request submitted successfully!</div>
+
+<footer>
+  © 2026 CampusCerts · Secure Digital Infrastructure
+</footer>
+
+<script>
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwXCDBMlfNVFVXSRl3bfHBTUZ7Lwmk2N7PzNqY5KHzlp213Z1kWkmEni5dQOpY6W497/exec';
+// HERO BUTTON SCROLL
+document.querySelector('.primary').onclick = () => { 
+  document.querySelector('.form-area').scrollIntoView({behavior:'smooth'}); 
+};
+document.querySelector('.secondary').onclick = () => { 
+  document.querySelector('.process').scrollIntoView({behavior:'smooth'}); 
+};
+
+// FORM SUBMISSION TO GOOGLE APPS SCRIPT
+const form = document.getElementById('certForm');
+form.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(WEB_APP_URL, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (response.ok) {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(()=> toast.classList.remove('show'), 3000);
+      form.reset();
+    } else {
+      alert('Error submitting request. Please try again.');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Network error. Please try again later.');
+  }
+});
+
+// ANIMATED METRICS
+function animateNumber(id, value) {
+  let el = document.getElementById(id);
+  let current = parseInt(el.textContent) || 0;
+  if (current === value) return; // skip if same
+
+  let count = current;
+  let step = Math.ceil(Math.abs(value - current) / 50); // smoother animation
+  let interval = setInterval(() => {
+    if (current < value) {
+      count += step;
+      if (count >= value) { count = value; clearInterval(interval); }
+    } else {
+      count -= step;
+      if (count <= value) { count = value; clearInterval(interval); }
+    }
+    el.textContent = count;
+  }, 20);
+}
+
+
+async function updateMetrics(){
+  try {
+    const res = await fetch(WEB_APP_URL);
+    const data = await res.json();
+
+    document.getElementById('totalRequests').textContent = data.totalRequests;
+    document.getElementById('approvedRequests').textContent = data.sentCertificates;
+    document.getElementById('pendingRequests').textContent = data.totalRequests - data.sentCertificates;
+  } catch(e){
+    console.error("Error fetching metrics:", e);
+  }
+}
+
+updateMetrics(); // first load
+setInterval(updateMetrics, 10000); // refresh every 10 seconds
+
+</script>
+
+</body>
+</html>
